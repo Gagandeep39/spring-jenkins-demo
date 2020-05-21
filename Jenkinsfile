@@ -1,8 +1,5 @@
 node {
     def commit_id
-    triggers {
-        pollSCM('*/15 * * * *')
-    }
     stage('Preparation') {
         checkout scm
         sh 'git rev-parse --short HEAD > .git/commit-id'
