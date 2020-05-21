@@ -16,6 +16,6 @@ node {
             sh './mvnw test'
     }
     stage('docker build/push') {
-        sh 'Work In progress'
+        sh 'echo Work In progress'
     }
 }
