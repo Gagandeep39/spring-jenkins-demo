@@ -6,10 +6,13 @@ node {
         commit_id = readFile('.git/commit-id').trim()
         sh 'chmod +x mvnw'
     }
+    stage('Compile') {
+            sh './mvnw compile'
+    }
     stage('test') {
             sh './mvnw test'
     }
     stage('docker build/push') {
-        sh 'echo Deployment Stage'
+        sh 'Work In progress'
     }
 }
