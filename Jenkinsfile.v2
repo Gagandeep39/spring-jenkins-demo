@@ -1,23 +1,26 @@
-node {
-    
-    stage('Compile') {
-        checkout scm
-        maven(maven: 'M3') {
-            sh 'mvn compile'
-        }
-    }
-    stage('test') {
-        steps {
-            sh './mvnw test'
-        }
-        post {
-            success {
-                junit '**/target/surefire-reports/TEST-*.xml'
-                archiveArtifacts 'target/*.jar'
+pipeline {
+    agent any
+    stages {
+        stage ('Compile Stage') {
+            steps {
+                withMaven(maven : 'M3') {
+                    bat'mvn clean compile'
+                }
             }
         }
-    }
-    stage('docker build/push') {
-        sh 'echo Work In progress'
+        stage ('Testing Stage') {
+            steps {
+                withMaven(maven : 'M3') {
+                    bat'mvn test'
+                }
+            }
+        }
+        stage ('Install Stage') {
+            steps {
+                withMaven(maven : 'M3') {
+                    bat'mvn install'
+                }
+            }
+        }
     }
 }
