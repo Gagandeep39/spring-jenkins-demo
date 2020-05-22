@@ -4,24 +4,22 @@ node {
         // Install the Maven version configured as "M3" and add it to the path.
         maven 'M3'
     }
-    stages {
-        stage('Compile') {
-            checkout scm
-            sh './mvnw compile'
+    stage('Compile') {
+        checkout scm
+        sh './mvnw compile'
+    }
+    stage('test') {
+        steps {
+            sh './mvnw test'
         }
-        stage('test') {
-            steps {
-                sh './mvnw test'
-            }
-            post {
-                success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.jar'
-                }
+        post {
+            success {
+                junit '**/target/surefire-reports/TEST-*.xml'
+                archiveArtifacts 'target/*.jar'
             }
         }
-        stage('docker build/push') {
-            sh 'echo Work In progress'
-        }
+    }
+    stage('docker build/push') {
+        sh 'echo Work In progress'
     }
 }
