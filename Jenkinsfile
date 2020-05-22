@@ -18,7 +18,6 @@ pipeline {
                     commit_id = readFile('.git/commit-id').trim()
                 }
                 sh 'chmod +x mvnw'
-                sh 'exit 1'
             }
         }
         stage('Compile') {
