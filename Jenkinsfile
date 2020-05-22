@@ -2,7 +2,7 @@
 def commit_id
 pipeline {
     agent any
-    environtment {
+    environment {
         to = emailextrecipients([
         [$class: 'CulpritsRecipientProvider'],
         [$class: 'DevelopersRecipientProvider'],
