@@ -27,9 +27,9 @@ pipeline {
                 sh'./mvnw test'
             }
         }
-        stage ('Install Stage') {
+        stage ('Package Stage') {
             steps {
-                sh'./mvnw install'
+                sh'./mvnw package'
             }
         }
         stage ('Build/Publish') {
