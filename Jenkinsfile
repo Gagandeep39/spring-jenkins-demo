@@ -1,4 +1,4 @@
-node {
+pipeline {
     def commit_id
     stage('Preparation') {
         checkout scm
@@ -7,10 +7,10 @@ node {
         sh 'chmod +x mvnw'
     }
     stage('Compile') {
-            sh './mvnw compile'
+        sh './mvnw compile'
     }
     stage('test') {
-            sh './mvnw test'
+        sh './mvnw test'
     }
     stage('docker build/push') {
         sh 'echo Work In progress'
