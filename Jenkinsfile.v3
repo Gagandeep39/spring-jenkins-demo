@@ -39,7 +39,7 @@ pipeline {
         stage ('Deploy on this Server') {
             steps {
                 script {
-                    docker.image('gagandeep39/spring-jenkins-demo:' + commit_id).run()
+                    docker.image('gagandeep39/spring-jenkins-demo:' + commit_id).run('-p 8081:8081')
                 }
             }
         }
