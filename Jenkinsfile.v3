@@ -22,11 +22,6 @@ pipeline {
                 sh'./mvnw test'
             }
         }
-        stage ('Install Stage') {
-            steps {
-                sh'./mvnw install'
-            }
-        }
         stage ('Build/Publish') {
             steps {
                 script {
@@ -39,8 +34,6 @@ pipeline {
         stage ('Deploy on this Server') {
             steps {
                 script {
-                    // previousImage = docker.container('gagandeep39/spring-jenkins-demo')
-                    // previousImage.stop()
                     sh 'docker stop spring-jenkins-demo || echo Container is not on'
                     sh 'docker rm -f spring-jenkins-demo || echo Container doesnt exists'
                     docker.image('gagandeep39/spring-jenkins-demo:' + commit_id).run('-p 8081:8081 --name spring-jenkins-demo')
