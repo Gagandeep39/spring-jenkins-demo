@@ -2,7 +2,7 @@ node {
     
     stage('Compile') {
         checkout scm
-        withMaven(maven: 'M3') {
+        maven(maven: 'M3') {
             sh 'mvn compile'
         }
     }
