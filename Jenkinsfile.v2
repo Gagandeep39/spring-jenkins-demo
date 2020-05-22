@@ -4,21 +4,21 @@ pipeline {
         stage ('Compile Stage') {
             steps {
                 withMaven(maven : 'M3') {
-                    bat'mvn clean compile'
+                    sh'mvn clean compile'
                 }
             }
         }
         stage ('Testing Stage') {
             steps {
                 withMaven(maven : 'M3') {
-                    bat'mvn test'
+                    sh'mvn test'
                 }
             }
         }
         stage ('Install Stage') {
             steps {
                 withMaven(maven : 'M3') {
-                    bat'mvn install'
+                    sh'mvn install'
                 }
             }
         }
