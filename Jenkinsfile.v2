@@ -1,22 +1,23 @@
-pipeline {
-    stages {
-        stage('Compile') {
-            checkout scm
+node {
+    
+    stage('Compile') {
+        checkout scm
+        withMaven(maven: 'M3') {
             sh 'mvn compile'
         }
-        stage('test') {
-            steps {
-                sh './mvnw test'
-            }
-            post {
-                success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.jar'
-                }
+    }
+    stage('test') {
+        steps {
+            sh './mvnw test'
+        }
+        post {
+            success {
+                junit '**/target/surefire-reports/TEST-*.xml'
+                archiveArtifacts 'target/*.jar'
             }
         }
-        stage('docker build/push') {
-            sh 'echo Work In progress'
-        }
+    }
+    stage('docker build/push') {
+        sh 'echo Work In progress'
     }
 }
