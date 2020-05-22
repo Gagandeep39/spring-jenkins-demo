@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('Install Stage') {
             steps {
-                sh'mvn install'
+                sh'./mvnw install'
             }
         }
         stage ('Build/Publish') {
