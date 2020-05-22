@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker stop spring-jenkins-demo || echo Container is not on'
-                    sh 'docker rm -f spring-jenkins-demo || echo Container doesnt exists'
+                    sh 'docker image rm -f spring-jenkins-demo || echo Container doesnt exists'
                     docker.image('gagandeep39/spring-jenkins-demo:' + VERSION).run('-p 8081:8081 --name spring-jenkins-demo')
                 }
             }
