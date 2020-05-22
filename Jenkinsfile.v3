@@ -39,7 +39,7 @@ pipeline {
         stage ('Deploy on this Server') {
             steps {
                 script {
-                    previousImage = docker.image('gagandeep39/spring-jenkins-demo')
+                    previousImage = docker.container('gagandeep39/spring-jenkins-demo')
                     previousImage.stop()
                     // sh 'docker stop spring-jenkins-demo'
                     docker.image('gagandeep39/spring-jenkins-demo:' + commit_id).run('-p 8081:8081 --name spring-jenkins-demo')
