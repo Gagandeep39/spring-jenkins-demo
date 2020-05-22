@@ -15,10 +15,10 @@ pipeline {
                 }
             }
         }
-        stage ('Install Stage') {
+        stage ('Package') {
             steps {
                 withMaven(maven : 'M3') {
-                    sh'mvn install'
+                    sh'mvn package'
                 }
             }
         }
