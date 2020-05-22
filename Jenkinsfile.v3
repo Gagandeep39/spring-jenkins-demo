@@ -24,7 +24,9 @@ pipeline {
             }
         }
         stage ('Deploy on this Server') {
-            def mysql = docker.image('gagandeep39/spring-jenkins-demo:${commit_id}').run()
+            steps {
+                def mysql = docker.image('gagandeep39/spring-jenkins-demo:${commit_id}').run()
+            }
         }
     }
 }
