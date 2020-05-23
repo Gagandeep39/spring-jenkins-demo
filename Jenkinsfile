@@ -1,6 +1,4 @@
-
-def commit_id
-pipeline {
+node {
     agent any
     environment {
         to = emailextrecipients([
