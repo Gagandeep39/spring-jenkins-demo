@@ -1,14 +1,7 @@
 // Scripted Approach - Jenkins using Email Support
 pipeline = {
-    environment {
-        def to = emailextrecipients([
-        [$class: 'CulpritsRecipientProvider'],
-        [$class: 'DevelopersRecipientProvider'],
-        [$class: 'RequesterRecipientProvider']
-    ])
-        def IMAGE = readMavenPom().getArtifactId()
-        def VERSION = readMavenPom().getVersion()
-    }
+    def IMAGE = readMavenPom().getArtifactId()
+    def VERSION = readMavenPom().getVersion()
 
     stage('Preparation') {
         checkout scm
@@ -40,6 +33,13 @@ pipeline = {
 }
 
 postFailure = {
+    
+    def to = emailextrecipients([
+        [$class: 'CulpritsRecipientProvider'],
+        [$class: 'DevelopersRecipientProvider'],
+        [$class: 'RequesterRecipientProvider']
+    ])
+
     currentBuild.result = 'FAILURE'
     // set variables
     def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
