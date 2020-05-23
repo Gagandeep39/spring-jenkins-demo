@@ -31,7 +31,6 @@ pipeline {
         stage ('Testing Stage') {
             steps {
                 sh'./mvnw test'
-                exit 1
             }
         }
         stage ('Package Stage') {
