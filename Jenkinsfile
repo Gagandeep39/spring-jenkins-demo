@@ -7,7 +7,7 @@ node {
         [$class: 'RequesterRecipientProvider']
     ])
     }
-    stages {
+    // stages {
         stage('Preparation') {
             steps {
                 // checkout scm
@@ -33,7 +33,7 @@ node {
                 sh 'echo Work In progress'
             }
         }
-    }
+    // }
     post {
         failure {
             script {
