@@ -1,8 +1,8 @@
 // Scripted Approach - Jenkins using Docker Support
 node {
     environment {
-        IMAGE = readMavenPom().getArtifactId()
-        VERSION = readMavenPom().getVersion()
+        def IMAGE = readMavenPom().getArtifactId()
+        def VERSION = readMavenPom().getVersion()
     }
     stage('Preparation') {
         checkout scm
