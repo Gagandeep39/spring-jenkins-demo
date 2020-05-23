@@ -1,5 +1,5 @@
 // Scripted Approach - Jenkins using Email Support
-node {
+pipeline = {
     def IMAGE = readMavenPom().getArtifactId()
     def VERSION = readMavenPom().getVersion()
     stage('Preparation') {
@@ -29,18 +29,33 @@ node {
         docker.image('gagandeep39/spring-jenkins-demo:' + VERSION).run('-p 8081:8081 --name spring-jenkins-demo')
         sh 'docker image prune -f'
     }
-    post {
-        failure {
-            currentBuild.result = 'FAILURE'
-            // set variables
-            def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
-            def content = '${JELLY_SCRIPT,template="html"}'
-            // send email
-            if (to != null && !to.isEmpty()) {
-                emailext(body: content, mimeType: 'text/html',
+}
+
+postFailure = {
+    currentBuild.result = 'FAILURE'
+    // set variables
+    def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
+    def content = '${JELLY_SCRIPT,template="html"}'
+    // send email
+    if (to != null && !to.isEmpty()) {
+        emailext(body: content, mimeType: 'text/html',
                 replyTo: '$DEFAULT_REPLYTO', subject: subject,
                 to: to, attachLog: true )
-            }
-        }
+    }
+}
+node {
+    environment {
+        to = emailextrecipients([
+        [$class: 'CulpritsRecipientProvider'],
+        [$class: 'DevelopersRecipientProvider'],
+        [$class: 'RequesterRecipientProvider']
+    ])
+    }
+
+    try {
+        pipeline()
+    }
+    catch (e) {
+        postFailure()
     }
 }
