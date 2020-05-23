@@ -1,5 +1,5 @@
 node {
-    agent any
+    // agent any
     environment {
         to = emailextrecipients([
         [$class: 'CulpritsRecipientProvider'],
