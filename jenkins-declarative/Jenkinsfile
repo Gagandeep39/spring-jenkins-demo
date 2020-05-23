@@ -1,0 +1,18 @@
+// Declarative Approach - Simple Jenkins using Springs MVN
+pipeline {
+    agent any
+    stages {
+        stage ('Preparation') {
+            sh 'chmod +x mvnw'
+        }
+        stage ('Compile') {
+            sh './mvnw compile'
+        }
+        stage ('Test') {
+            sh './mvnw test'
+        }
+        stage ('Build') {
+            sh './mvnw clean package'
+        }
+    }
+}
