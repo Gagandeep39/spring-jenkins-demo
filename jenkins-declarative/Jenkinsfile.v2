@@ -1,4 +1,5 @@
 // Declarative Approach - Simple Jenkins using Jenkins Maven
+pipeline {
     agent any
     stages {
         stage ('Compile Stage') {
