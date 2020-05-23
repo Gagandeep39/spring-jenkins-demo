@@ -32,6 +32,15 @@ pipeline = {
 }
 
 postFailure = {
+
+    environment {
+        to = emailextrecipients([
+        [$class: 'CulpritsRecipientProvider'],
+        [$class: 'DevelopersRecipientProvider'],
+        [$class: 'RequesterRecipientProvider']
+    ])
+    }
+
     currentBuild.result = 'FAILURE'
     // set variables
     def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
@@ -44,13 +53,6 @@ postFailure = {
     }
 }
 node {
-    environment {
-        to = emailextrecipients([
-        [$class: 'CulpritsRecipientProvider'],
-        [$class: 'DevelopersRecipientProvider'],
-        [$class: 'RequesterRecipientProvider']
-    ])
-    }
 
     try {
         pipeline()
