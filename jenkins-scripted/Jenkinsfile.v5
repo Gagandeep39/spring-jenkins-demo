@@ -1,5 +1,6 @@
 // Scripted Approach - Jenkins using SonarQube
 pipeline = {
+    
     def IMAGE = readMavenPom().getArtifactId()
     def VERSION = readMavenPom().getVersion()
 
