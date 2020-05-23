@@ -9,34 +9,34 @@ node {
     }
     // stages {
         stage('Preparation') {
-            steps {
+            // steps {
                 // checkout scm
                 sh 'git rev-parse --short HEAD > .git/commit-id'
-                script {
+                // script {
                     commit_id = readFile('.git/commit-id').trim()
-                }
+                // }
                 sh 'chmod +x mvnw'
-            }
+            // }
         }
         stage('Compile') {
-            steps {
+            // steps {
                 sh './mvnw compile'
-            }
+            // }
         }
         stage('test') {
-            steps {
+            // steps {
                 sh './mvnw test'
-            }
+            // }
         }
         stage('docker build/push') {
-            steps {
+            // steps {
                 sh 'echo Work In progress'
-            }
+            // }
         }
     // }
     post {
         failure {
-            script {
+            // script {
                 currentBuild.result = 'FAILURE'
                 // set variables
                 def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
@@ -47,7 +47,7 @@ node {
             replyTo: '$DEFAULT_REPLYTO', subject: subject,
             to: to, attachLog: true )
                 }
-            }
+            // }
         }
     }
 }
