@@ -1,7 +1,15 @@
 // Scripted Approach - Jenkins using Email Support
 pipeline = {
-    def IMAGE = readMavenPom().getArtifactId()
-    def VERSION = readMavenPom().getVersion()
+    environment {
+        def to = emailextrecipients([
+        [$class: 'CulpritsRecipientProvider'],
+        [$class: 'DevelopersRecipientProvider'],
+        [$class: 'RequesterRecipientProvider']
+    ])
+        def IMAGE = readMavenPom().getArtifactId()
+        def VERSION = readMavenPom().getVersion()
+    }
+
     stage('Preparation') {
         checkout scm
         sh 'git rev-parse --short HEAD > .git/commit-id'
@@ -32,15 +40,6 @@ pipeline = {
 }
 
 postFailure = {
-
-    environment {
-        to = emailextrecipients([
-        [$class: 'CulpritsRecipientProvider'],
-        [$class: 'DevelopersRecipientProvider'],
-        [$class: 'RequesterRecipientProvider']
-    ])
-    }
-
     currentBuild.result = 'FAILURE'
     // set variables
     def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
@@ -53,7 +52,6 @@ postFailure = {
     }
 }
 node {
-
     try {
         pipeline()
     }
