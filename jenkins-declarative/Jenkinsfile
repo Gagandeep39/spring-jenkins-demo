@@ -3,16 +3,24 @@ pipeline {
     agent any
     stages {
         stage ('Preparation') {
-            sh 'chmod +x mvnw'
+            steps {
+                sh 'chmod +x mvnw'
+            }
         }
         stage ('Compile') {
-            sh './mvnw compile'
+            steps {
+                sh './mvnw compile'
+            }
         }
         stage ('Test') {
-            sh './mvnw test'
+            steps {
+                sh './mvnw test'
+            }
         }
         stage ('Build') {
-            sh './mvnw clean package'
+            steps {
+                sh './mvnw clean package'
+            }
         }
     }
 }
